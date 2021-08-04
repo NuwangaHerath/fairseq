@@ -424,6 +424,12 @@ class Trainer(object):
         rank = 0 will load the checkpoint, and then broadcast it to all
         other ranks.
         """
+        m = 0
+        for param in self.model.encoder.parameters():
+            if m == 11:
+                logger.info(param)
+            m = m + 1
+
         extra_state, self._optim_history, last_optim_state = None, [], None
 
         logger.info(f"Preparing to load checkpoint {filename}")
