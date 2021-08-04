@@ -424,11 +424,10 @@ class Trainer(object):
         rank = 0 will load the checkpoint, and then broadcast it to all
         other ranks.
         """
-        m = 0
-        for param in self.model.encoder.parameters():
-            if m == 11:
-                logger.info(param)
-            m = m + 1
+        # copy initialized decoder params
+        init_decoder = []
+        for param in self.model.decoder.parameters():
+            init_decoder.append(param)
 
         extra_state, self._optim_history, last_optim_state = None, [], None
 
@@ -483,13 +482,16 @@ class Trainer(object):
                 )
 
                 # Freeze encoder parameters of the model loaded from checkpoints
-                n = 0
                 for param in self.model.encoder.parameters():
                     param.requires_grad = False
                     logger.info("Encoder parameters froze!")
-                    if n == 11:
-                        logger.info(param)
-                    n = n + 1
+
+                # replace the decoder parameters of pre-trained model with initial decoder params
+                m = 0
+                for param in self.model.decoder.parameters():
+                    param = init_decoder[m]
+                    logger.info("decoder parameters replaced with initial decoder params!")
+                    m = m + 1
 
                 # save memory for later steps
                 del state["model"]
