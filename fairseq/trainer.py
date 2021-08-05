@@ -425,6 +425,7 @@ class Trainer(object):
         other ranks.
         """
         # copy initialized decoder params
+        logger.info("****####Is optimizer reset" + str(reset_optimizer))
         init_decoder = []
         for param in self.model.decoder.parameters():
             init_decoder.append(param)
