@@ -414,7 +414,7 @@ class Trainer(object):
     def load_checkpoint(
         self,
         filename,
-        reset_optimizer=False,
+        reset_optimizer=True,
         reset_lr_scheduler=False,
         optimizer_overrides=None,
         reset_meters=False,
