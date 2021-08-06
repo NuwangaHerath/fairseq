@@ -65,6 +65,8 @@ class BaseFairseqModel(nn.Module):
         log_probs: bool,
         sample: Optional[Dict[str, Tensor]] = None,
     ):
+        logger.info("get_normalized probs in base fairseq model model")
+
         """Get normalized probabilities (or log probs) from a net's output."""
         return self.get_normalized_probs_scriptable(net_output, log_probs, sample)
 
@@ -555,6 +557,7 @@ class FairseqEncoderModel(BaseFairseqModel):
 
     def get_normalized_probs(self, net_output, log_probs, sample=None):
         """Get normalized probabilities (or log probs) from a net's output."""
+        logger.info("get_normalized probs in encoder only model")
         encoder_out = net_output["encoder_out"]
         if torch.is_tensor(encoder_out):
             logits = encoder_out.float()

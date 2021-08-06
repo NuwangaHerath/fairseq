@@ -118,6 +118,8 @@ class LabelSmoothedCrossEntropyCriterion(FairseqCriterion):
         return loss, nll_loss
 
     def compute_accuracy(self, model, net_output, sample):
+        model_cp = model
+
         lprobs, target = self.get_lprobs_and_target(model, net_output, sample)
         mask = target.ne(self.padding_idx)
         n_correct = torch.sum(
