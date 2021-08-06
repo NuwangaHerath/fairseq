@@ -82,10 +82,12 @@ class BaseFairseqModel(nn.Module):
     ):
         """Scriptable helper function for get_normalized_probs in ~BaseFairseqModel"""
         if hasattr(self, "decoder"):
+            logger.info("##### decoder #####")
             return self.decoder.get_normalized_probs(net_output, log_probs, sample)
         elif torch.is_tensor(net_output):
             # syntactic sugar for simple models which don't have a decoder
             # (e.g., the classification tutorial)
+            logger.info("##### NORMAL #####")
             logits = net_output.float()
             if log_probs:
                 return F.log_softmax(logits, dim=-1)
