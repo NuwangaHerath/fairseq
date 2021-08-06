@@ -5,6 +5,7 @@
 
 from typing import Dict, List, Optional, Tuple
 
+import logging
 import torch
 import torch.nn as nn
 from fairseq import utils
@@ -18,6 +19,7 @@ from fairseq.models.transformer import (
 )
 from torch import Tensor
 
+logger = logging.getLogger(__name__)
 
 class TransformerModelBase(FairseqEncoderDecoderModel):
     """
@@ -168,6 +170,7 @@ class TransformerModelBase(FairseqEncoderDecoderModel):
         log_probs: bool,
         sample: Optional[Dict[str, Tensor]] = None,
     ):
+        logger.info("####### Hit the get normalized probs in transformer base")
         """Get normalized probabilities (or log probs) from a net's output."""
         return self.get_normalized_probs_scriptable(net_output, log_probs, sample)
 
