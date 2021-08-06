@@ -476,10 +476,10 @@ class Trainer(object):
                     state["model"], strict=True, model_cfg=self.cfg.model
                 )
 
-                # Freeze encoder parameters of the model loaded from checkpoints
-                for param in self.model.encoder.parameters():
+                # Freeze decoder parameters of the model loaded from checkpoints
+                for param in self.model.decoder.parameters():
                     param.requires_grad = False
-                    logger.info("Encoder parameters froze!")
+                    logger.info("Decoder parameters froze!")
 
                 # save memory for later steps
                 del state["model"]
