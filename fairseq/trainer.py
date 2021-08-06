@@ -424,6 +424,11 @@ class Trainer(object):
         rank = 0 will load the checkpoint, and then broadcast it to all
         other ranks.
         """
+        # Freeze decoder parameters of the model loaded from checkpoints
+        for param in self.model.decoder.parameters():
+            param.requires_grad = False
+            logger.info("Decoder parameters froze!")
+
         extra_state, self._optim_history, last_optim_state = None, [], None
 
         logger.info(f"Preparing to load checkpoint {filename}")
