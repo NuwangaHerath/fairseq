@@ -475,15 +475,14 @@ class Trainer(object):
                 self.model.load_state_dict(
                     state["model"], strict=True, model_cfg=self.cfg.model
                 )
-
-                # Freeze encoder parameters of the model loaded from checkpoints
+                # save encoder parameters
                 with open('encoder-params.txt', 'w') as f:
                     for param in self.model.encoder.parameters():
                         f.write("%s\n" % param)
-                with open('decoder-params.txt', 'w') as f:
-                    for param in self.model.decoder.parameters():
-                        f.write("%s\n" % param)
-                logger.info(self.model.encoder.state_dict())
+                # logger.info(self.model.encoder.state_dict())
+                torch.save(self.model.encoder.state_dict(), 'encoder-params.pth')
+
+                # Freeze encoder parameters of the model loaded from checkpoints
                 for param in self.model.encoder.parameters():
                     param.requires_grad = False
                     logger.info("Encoder parameters froze!")
