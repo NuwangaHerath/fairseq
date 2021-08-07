@@ -478,8 +478,10 @@ class Trainer(object):
 
                 # Freeze encoder parameters of the model loaded from checkpoints
                 with open('encoder-params.txt', 'w') as f:
-                    for param in self.model.encoder.parameters():
+                    for name, param in self.model.encoder.parameters():
+                        f.write("%s\n" % name)
                         f.write("%s\n" % param)
+                        logger.info(name)
                         logger.info(type(param))
                 for param in self.model.encoder.parameters():
                     param.requires_grad = False
