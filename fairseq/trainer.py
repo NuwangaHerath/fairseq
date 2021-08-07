@@ -427,7 +427,7 @@ class Trainer(object):
         # load pre-saved encoder
         encoder_model = self.model
         encoder_model.load_state_dict(torch.load('encoder-params.pth'))
-        for param in encoder_model.paramters():
+        for param in encoder_model.encoder.paramters():
             logger.info(param)
 
         extra_state, self._optim_history, last_optim_state = None, [], None
