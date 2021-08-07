@@ -477,6 +477,10 @@ class Trainer(object):
                 )
 
                 # Freeze encoder parameters of the model loaded from checkpoints
+                with open('encoder-params.txt', 'w') as f:
+                    for param in self.model.encoder.parameters():
+                        f.write("%s\n" % param)
+                        logger.info(type(param))
                 for param in self.model.encoder.parameters():
                     param.requires_grad = False
                     logger.info("Encoder parameters froze!")
