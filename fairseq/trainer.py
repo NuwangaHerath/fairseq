@@ -480,7 +480,7 @@ class Trainer(object):
                     for param in self.model.encoder.parameters():
                         f.write("%s\n" % param)
                 # logger.info(self.model.encoder.state_dict())
-                torch.save(self.model.encoder.state_dict(), 'encoder-params.pth')
+                torch.save(self.model.state_dict(), 'encoder-params.pth')
 
                 # Freeze encoder parameters of the model loaded from checkpoints
                 for param in self.model.encoder.parameters():
