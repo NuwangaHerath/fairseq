@@ -679,11 +679,11 @@ class Trainer(object):
         self.criterion.train()
         self.zero_grad()
 
-        n = 0
-        for param in self.model.encoder.parameters():
-            if n == 11:
-                logger.info(param)
-            n = n + 1
+        # n = 0
+        # for param in self.model.encoder.parameters():
+        #     if n == 11:
+        #         logger.info(param)
+        #     n = n + 1
 
         metrics.log_start_time("train_wall", priority=800, round=0)
 
