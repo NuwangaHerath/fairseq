@@ -430,7 +430,7 @@ class Trainer(object):
         encoder_params = []
         for param in encoder_model.encoder.parameters():
             encoder_params.append(param)
-            logger.info(param.requires_grad)
+            logger.info(param)
 
         extra_state, self._optim_history, last_optim_state = None, [], None
 
