@@ -427,8 +427,10 @@ class Trainer(object):
         # load pre-saved encoder
         encoder_model = self.model
         encoder_model.load_state_dict(torch.load('encoder-params.pth'))
+        encoder_params = []
         for param in encoder_model.encoder.parameters():
-            logger.info(param)
+            encoder_params.append(param)
+            logger.info(param.requires_grad)
 
         extra_state, self._optim_history, last_optim_state = None, [], None
 
@@ -481,10 +483,12 @@ class Trainer(object):
                 self.model.load_state_dict(
                     state["model"], strict=True, model_cfg=self.cfg.model
                 )
-                # Freeze encoder parameters of the model loaded from checkpoints
+                # replace the encoder parameters from loaded encoder parameters
+                m = 0
                 for param in self.model.encoder.parameters():
-                    param.requires_grad = False
-                    logger.info("Encoder parameters froze!")
+                    param = encoder_params[m]
+                    m = m + 1
+                    logger.info("Encoder parameter replaced with loaded encoder parameter!")
 
                 # save memory for later steps
                 del state["model"]
@@ -672,6 +676,12 @@ class Trainer(object):
         self.model.train()
         self.criterion.train()
         self.zero_grad()
+
+        n = 0
+        for param in self.model.encoder.parameters():
+            if n == 11:
+                logger.info(param)
+            n = n + 1
 
         metrics.log_start_time("train_wall", priority=800, round=0)
 
