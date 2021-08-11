@@ -488,9 +488,9 @@ class Trainer(object):
                 # replace the encoder parameters from loaded encoder parameters
                 m = 0
                 for param in self.model.encoder.parameters():
-                    param.data = encoder_params[m].data
+                    param.data = encoder_params[m]
                     if m == 11:
-                        logger.info(param)
+                        logger.info(type(encoder_params[11]))
                     m = m + 1
                     logger.info("Encoder parameter replaced with loaded encoder parameter!")
 
