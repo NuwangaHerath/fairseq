@@ -490,7 +490,7 @@ class Trainer(object):
                 for param in self.model.encoder.parameters():
                     param = encoder_params[m]
                     if m == 11:
-                        logger.info(encoder_params[11])
+                        logger.info(param)
                     m = m + 1
                     logger.info("Encoder parameter replaced with loaded encoder parameter!")
 
