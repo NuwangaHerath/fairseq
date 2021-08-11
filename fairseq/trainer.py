@@ -432,7 +432,7 @@ class Trainer(object):
             encoder_params.append(param)
             # logger.info(param)
 
-        logger.info(encoder_params)
+        logger.info(encoder_params[11])
 
         extra_state, self._optim_history, last_optim_state = None, [], None
 
@@ -490,7 +490,7 @@ class Trainer(object):
                 for param in self.model.encoder.parameters():
                     param = encoder_params[m]
                     if m == 11:
-                        logger.info(encoder_params[m])
+                        logger.info(encoder_params[11])
                     m = m + 1
                     logger.info("Encoder parameter replaced with loaded encoder parameter!")
 
