@@ -488,7 +488,7 @@ class Trainer(object):
                 # replace the encoder parameters from loaded encoder parameters
                 m = 0
                 for param in self.model.encoder.parameters():
-                    param.data.copy_(encoder_params[m].data)
+                    param.data.copy_(encoder_params[m].data, non_blocking=True)
                     if m == 11:
                         logger.info(param)
                     m = m + 1
