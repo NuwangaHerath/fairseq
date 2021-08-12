@@ -493,6 +493,8 @@ class Trainer(object):
                         logger.info(param)
                     m = m + 1
                     logger.info("Encoder parameter replaced with loaded encoder parameter!")
+                for param in self.model.encoder.parameters():
+                    logger.info(param)
 
                 # save memory for later steps
                 del state["model"]
