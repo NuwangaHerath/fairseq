@@ -266,7 +266,7 @@ class Trainer(object):
         params = list(
             filter(
                 lambda p: p.requires_grad,
-                chain(self.model.parameters(), self.criterion.parameters()),
+                chain(self.model.decoder.parameters(), self.criterion.decoder.parameters()),
             )
         )
 
