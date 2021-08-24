@@ -429,7 +429,7 @@ class Trainer(object):
         encoder_model.load_state_dict(torch.load('encoder-params.pth'))
         encoder_params = []
         for param in encoder_model.encoder.parameters():
-            encoder_params.append(param)
+            encoder_params.append(param.clone())
             # logger.info(param)
 
         logger.info(encoder_params[11])
@@ -490,7 +490,7 @@ class Trainer(object):
                     m = 0
                     for param in self.model.encoder.parameters():
                         #param.data.copy_(encoder_params[m].data, non_blocking=False)
-                        param.copy_(encoder_params[m])
+                        param.data.copy_(encoder_params[m])
                         #param.data.fill_(0)
                         if m == 11:
                             logger.info(param)
