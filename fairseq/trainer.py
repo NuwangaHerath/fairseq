@@ -486,16 +486,16 @@ class Trainer(object):
                     state["model"], strict=True, model_cfg=self.cfg.model
                 )
                 # replace the encoder parameters from loaded encoder parameters
-                with torch.no_grad():
-                    m = 0
-                    for param in self.model.encoder.parameters():
-                        #param.data.copy_(encoder_params[m].data, non_blocking=False)
-                        param.data.copy_(encoder_params[m])
-                        #param.data.fill_(0)
-                        if m == 11:
-                            logger.info(param)
-                        m = m + 1
-                        logger.info("Encoder parameter replaced with loaded encoder parameter!")
+
+                m = 0
+                for param in self.model.encoder.parameters():
+                    #param.data.copy_(encoder_params[m].data, non_blocking=False)
+                    param.data.copy_(encoder_params[m])
+                    #param.data.fill_(0)
+                    if m == 11:
+                        logger.info(param)
+                    m = m + 1
+                    logger.info("Encoder parameter replaced with loaded encoder parameter!")
                 # for param in self.model.encoder.parameters():
                 #     logger.info(param)
 
