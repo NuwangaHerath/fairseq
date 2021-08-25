@@ -484,8 +484,8 @@ class Trainer(object):
                 self.model.load_state_dict(
                     state["model"], strict=True, model_cfg=self.cfg.model
                 )
-                # replace the encoder parameters from loaded encoder parameters
 
+                # replace the encoder parameters from loaded encoder parameters
                 m = 0
                 for param in self.model.encoder.parameters():
                     param.data.copy_(encoder_params[m])
