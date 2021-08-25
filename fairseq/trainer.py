@@ -426,9 +426,6 @@ class Trainer(object):
         """
         # copy initialized decoder params
         logger.info("****####Is optimizer reset" + str(reset_optimizer))
-        init_decoder = []
-        for param in self.model.decoder.parameters():
-            init_decoder.append(param)
 
         extra_state, self._optim_history, last_optim_state = None, [], None
 
@@ -486,13 +483,6 @@ class Trainer(object):
                 for param in self.model.encoder.parameters():
                     param.requires_grad = False
                     logger.info("Encoder parameters froze!")
-
-                # replace the decoder parameters of pre-trained model with initial decoder params
-                m = 0
-                for param in self.model.decoder.parameters():
-                    param = init_decoder[m]
-                    logger.info("decoder parameters replaced with initial decoder params!")
-                    m = m + 1
 
                 # save memory for later steps
                 del state["model"]
