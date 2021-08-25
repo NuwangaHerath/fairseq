@@ -428,7 +428,7 @@ class Trainer(object):
         logger.info("****####Is optimizer reset" + str(reset_optimizer))
         init_decoder = []
         for param in self.model.decoder.parameters():
-            init_decoder.append(param)
+            init_decoder.append(param.clone())
 
         extra_state, self._optim_history, last_optim_state = None, [], None
 
@@ -490,7 +490,7 @@ class Trainer(object):
                 # replace the decoder parameters of pre-trained model with initial decoder params
                 m = 0
                 for param in self.model.decoder.parameters():
-                    param = init_decoder[m]
+                    param.data.copy_(init_decoder[m])
                     logger.info("decoder parameters replaced with initial decoder params!")
                     m = m + 1
 
