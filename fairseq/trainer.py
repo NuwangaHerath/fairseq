@@ -492,6 +492,14 @@ class Trainer(object):
                     m = m + 1
                     logger.info("Encoder parameter replaced with loaded encoder parameter!")
 
+                #save created model without training
+                torch.save({
+                    'epoch': 0,
+                    'model_state_dict': self.model.state_dict(),
+                    'optimizer_state_dict': self.optimizer.state_dict(),
+                    'loss': self.loss,
+                }, 'zero-shot.pt')
+
                 # save memory for later steps
                 del state["model"]
                 if utils.has_parameters(self.get_criterion()):
