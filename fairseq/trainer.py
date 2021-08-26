@@ -497,7 +497,6 @@ class Trainer(object):
                     'epoch': 0,
                     'model_state_dict': self.model.state_dict(),
                     'optimizer_state_dict': self.optimizer.state_dict(),
-                    'loss': self.loss,
                 }, 'zero-shot.pt')
 
                 # save memory for later steps
