@@ -425,9 +425,10 @@ class Trainer(object):
         other ranks.
         """
         # load pre-saved encoder
-        #encoder_model = self.model
+        encoder_model = self.model
         #encoder_model.load_state_dict(torch.load('10_fairseq/si_en/checkpoints_5k/checkpoint480.pt'))
-        encoder_model = torch.load('10_fairseq/si_en/checkpoints_5k/checkpoint480.pt')
+        encoder_checkpoint = torch.load('10_fairseq/si_en/checkpoints_5k/checkpoint480.pt')
+        encoder_model.load_state_dict(encoder_checkpoint['model_state_dict'])
         encoder_params = []
         for param in encoder_model.encoder.parameters():
             encoder_params.append(param.clone())
