@@ -369,6 +369,8 @@ def post_process(sentence: str, symbol: str):
         pass
     elif symbol is not None:
         raise NotImplementedError(f"Unknown post_process option: {symbol}")
+    sentence = sentence.replace("\u0dca\u0020\u0dbb", "\u0DCA\u200D\u0dbb")
+    sentence = sentence.replace("\u0dca\u0020\u0dba", "\u0DCA\u200D\u0dba")
     return sentence
 
 
