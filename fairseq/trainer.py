@@ -358,6 +358,11 @@ class Trainer(object):
                     m = m + 1
                     logger.info("Encoder parameter replaced with loaded encoder parameter!")
 
+                # Freeze encoder parameters of the model loaded from checkpoints
+                for param in self.model.encoder.parameters():
+                    param.requires_grad = False
+                    logger.info("Encoder parameters froze!")
+
                 if utils.has_parameters(self.get_criterion()):
                     self.get_criterion().load_state_dict(
                         state["criterion"], strict=True
