@@ -360,7 +360,7 @@ class Trainer(object):
 
                 # Freeze encoder parameters of the model loaded from checkpoints
                 for param in self.model.encoder.parameters():
-                    param.requires_grad = False
+                    param.requires_grad = True
                     logger.info("Encoder parameters froze!")
 
                 if utils.has_parameters(self.get_criterion()):
