@@ -294,7 +294,7 @@ class Trainer(object):
 
         # load pre-saved encoder
         encoder_model = self.model
-        encoder_checkpoint = torch.load('/userdirs/halogen17/enta50k/models/checkpoints/checkpoint_106_100000.pt')
+        encoder_checkpoint = torch.load('/userdirs/halogen17/mbart50ft-fairseq-en-si/en_si_checkpoint/checkpoint_122_100000.pt')
         encoder_model.load_state_dict(encoder_checkpoint['model'])
         encoder_params = []
         for param in encoder_model.encoder.parameters():
