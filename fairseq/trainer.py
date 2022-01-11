@@ -456,8 +456,7 @@ class Trainer(object):
 
         # load pre-saved encoder
         encoder_model = self.model
-        encoder_checkpoint = torch.load(
-            '/userdirs/halogen17/nuwanga/crosslingualtrans/sita/sien_model/checkpoints/checkpoint450.pt')
+        encoder_checkpoint = torch.load('/userdirs/halogen17/<file path>/checkpoint_%$^pt')  # change accordingly
         encoder_model.load_state_dict(encoder_checkpoint['model'])
         encoder_params = []
         for param in encoder_model.encoder.parameters():
@@ -522,6 +521,11 @@ class Trainer(object):
                     param.data.copy_(encoder_params[m])
                     m = m + 1
                     logger.info("Encoder parameter replaced with loaded encoder parameter!")
+
+                # Freeze encoder parameters of the model loaded from checkpoints
+                for param in self.model.encoder.parameters():
+                    param.requires_grad = False
+                    logger.info("Encoder parameters froze!")
 
                 # save memory for later steps
                 del state["model"]
