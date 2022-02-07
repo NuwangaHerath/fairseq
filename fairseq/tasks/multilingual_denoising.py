@@ -70,6 +70,8 @@ class MultilingualDenoisingTask(DenoisingTask):
             languages = args.langs.split(",")
 
         if args.add_lang_token:
+            langs_load = "si,en,ta"
+            langs_to_add = langs_load.split(",")
             for lang in languages:
                 dictionary.add_symbol("[{}]".format(lang))
 
