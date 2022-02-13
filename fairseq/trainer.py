@@ -488,11 +488,11 @@ class Trainer(object):
                     logger.info("Encoder parameters froze!")
 
                 # replace the decoder parameters of pre-trained model with initial decoder params
-                m = 0
-                for param in self.model.decoder.parameters():
-                    param.data.copy_(init_decoder[m])
-                    logger.info("decoder parameters replaced with initial decoder params!")
-                    m = m + 1
+#                 m = 0
+#                 for param in self.model.decoder.parameters():
+#                     param.data.copy_(init_decoder[m])
+#                     logger.info("decoder parameters replaced with initial decoder params!")
+#                     m = m + 1
 
                 # save memory for later steps
                 del state["model"]
