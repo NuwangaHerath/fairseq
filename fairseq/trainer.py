@@ -443,7 +443,7 @@ class Trainer(object):
     def load_checkpoint(
         self,
         filename,
-        reset_optimizer=False,
+        reset_optimizer=True,
         reset_lr_scheduler=False,
         optimizer_overrides=None,
         reset_meters=False,
@@ -453,6 +453,9 @@ class Trainer(object):
         rank = 0 will load the checkpoint, and then broadcast it to all
         other ranks.
         """
+        # copy initialized decoder params
+        logger.info("****####Is optimizer reset" + str(reset_optimizer))
+
         extra_state, self._optim_history, last_optim_state = None, [], None
 
         logger.info(f"Preparing to load checkpoint {filename}")
@@ -504,6 +507,12 @@ class Trainer(object):
                 self.model.load_state_dict(
                     state["model"], strict=True, model_cfg=self.cfg.model
                 )
+
+                # Freeze encoder parameters of the model loaded from checkpoints
+                for param in self.model.encoder.parameters():
+                    param.requires_grad = False
+                    logger.info("Encoder parameters froze!")
+
                 # save memory for later steps
                 del state["model"]
                 if utils.has_parameters(self.get_criterion()):
@@ -523,6 +532,7 @@ class Trainer(object):
         if last_optim_state is not None and not reset_optimizer:
             # rebuild optimizer after loading model, since params may have changed
             self._build_optimizer()
+            logger.info("###*** Optimizer rebuilt!!")
 
             # only reload optimizer and lr_scheduler if they match
             last_optim = self._optim_history[-1]
