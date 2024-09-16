@@ -453,6 +453,15 @@ class Trainer(object):
         rank = 0 will load the checkpoint, and then broadcast it to all
         other ranks.
         """
+        # load pre-saved encoder
+        encoder_model = self.model
+        encoder_model.load_state_dict(torch.load('encoder-params.pth'))
+        encoder_params = []
+        for param in encoder_model.encoder.parameters():
+            encoder_params.append(param.clone())
+
+        logger.info(encoder_params[11])
+
         extra_state, self._optim_history, last_optim_state = None, [], None
 
         logger.info(f"Preparing to load checkpoint {filename}")
@@ -504,6 +513,14 @@ class Trainer(object):
                 self.model.load_state_dict(
                     state["model"], strict=True, model_cfg=self.cfg.model
                 )
+
+                # replace the encoder parameters from loaded encoder parameters
+                m = 0
+                for param in self.model.encoder.parameters():
+                    param.data.copy_(encoder_params[m])
+                    m = m + 1
+                    logger.info("Encoder parameter replaced with loaded encoder parameter!")
+
                 # save memory for later steps
                 del state["model"]
                 if utils.has_parameters(self.get_criterion()):
